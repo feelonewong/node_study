@@ -1,0 +1,26 @@
+{
+  "name": "node_study",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "cross-env": "^7.0.3",
+    "node": "^15.12.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "dev": "cross-env NODE_ENV=dev nodemon ./bin/www.js",
+    "prd": "cross-env NODE_ENV=production nodemon ./bin/www.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/feelonewong/node_study.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/feelonewong/node_study/issues"
+  },
+  "homepage": "https://github.com/feelonewong/node_study#readme"
+}
