@@ -4,20 +4,27 @@ const querystring = require("querystring");
 
 const server = http.createServer((req, res) => {
   const { method } = req;
-  if (method === "POST") {
-    let postdata = "";
-    req.on("data", (chunk) => {
-      postdata += chunk.toString();
-    });
+  const { url } = req;
+  const path = url.split("?")[0];
+  const query = querystring.parse(url.split("?")[1]);
+  res.setHeader("Content-Type", "application/json");
 
-    req.on("end", () => {
-      res.end(postdata);
+  const resData = {
+    method,
+    url,
+    path,
+    query,
+  };
+  if (method === "GET") {
+    res.end(JSON.stringify(resData));
+  } else if (method === "POST") {
+    let postData = "";
+    req.on("data", (chunk) => {
+      postData += chunk.toString();
     });
-  } else if (method === "GET") {
-    const { url } = req;
-    req.query = querystring.parse(url.split("?")[1]);
-    res.writeHeader(200, { "Content-type": "text/html;charset=utf-8" });
-    res.end(JSON.stringify(req.query));
+    req.on("end", () => {
+      res.end(postData);
+    });
   }
 });
 
