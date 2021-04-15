@@ -1,6 +1,31 @@
 const handleUserRouter = require("./src/router/user");
 const handleBlogRouter = require("./src/router/blog");
 const querystring = require("querystring");
+
+const getPostData = (req)=>{
+  return new Promise( (resolve,reject)=>{
+    if(req.method !== "POST" ){
+      resolve({});
+      return;
+    }
+    if( req.headers["content-type"] !== "application/json" ){
+      resolve({});
+      return;
+    }
+
+    let postdata = "";
+    req.on("data", chunk=>{
+      postdata+=chunk;
+    })
+
+    req.on("end", ()=>{
+      resolve( JSON.parse(postdata) );
+    })
+
+  })
+
+}
+
 const serverHandle = (req, res) => {
   res.setHeader("Content-type", "application/json");
   const { url } = req;
