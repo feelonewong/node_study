@@ -1,16 +1,18 @@
+const { getList, getDetail } = require("../controller/blog");
+const { SuccessModel } = require("../model/resData");
 const handleBlogRouter = (req, res) => {
   const { method } = req;
+  const id = req.query.id || "";
+  const author = req.query.author || "";
 
   if (method === "GET" && req.path === "/api/blog/list") {
-    return {
-      data: "获取博客列表接口",
-    };
+    const blogData = getList(author, id);
+    return new SuccessModel(blogData);
   }
 
   if (method === "GET" && req.path === "/api/blog/detail") {
-    return {
-      data: "获取博客详情",
-    };
+    const detailData = getDetail(id);
+    return new SuccessModel(detailData);
   }
 
   if (method === "POST" && req.path === "/api/blog/create") {

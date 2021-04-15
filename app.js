@@ -1,10 +1,12 @@
 const handleUserRouter = require("./src/router/user");
 const handleBlogRouter = require("./src/router/blog");
+const querystring = require("querystring");
 const serverHandle = (req, res) => {
   res.setHeader("Content-type", "application/json");
   const { url } = req;
   req.path = url.split("?")[0];
-
+  req.query = querystring.parse( url.split("?")[1] );
+  
   const userData = handleUserRouter(req, res);
   if (userData) {
     res.end(JSON.stringify(userData));
