@@ -1,5 +1,5 @@
-const { getList, getDetail } = require("../controller/blog");
-const { SuccessModel } = require("../model/resData");
+const { getList, getDetail, newBlog, updateBlog } = require("../controller/blog");
+const { SuccessModel, ErrorModel } = require("../model/resData");
 const handleBlogRouter = (req, res) => {
   const { method } = req;
   const id = req.query.id || "";
@@ -16,14 +16,16 @@ const handleBlogRouter = (req, res) => {
   }
 
   if (method === "POST" && req.path === "/api/blog/create") {
-    return {
-      data: "新建博客",
-    };
+    const data = newBlog(req.body);
+    return new SuccessModel(data);
   }
-  if (method === "POST" && req.path === "/api/blog/edit") {
-    return {
-      data: "修改博客",
-    };
+  if (method === "POST" && req.path === "/api/blog/update") {
+    const result = updateBlog(id, req.body);
+    if(result){
+      return new SuccessModel();
+    }else{
+      return new ErrorModel("博客更新失败");
+    }
   }
 
   if (method === "POST" && req.path === "/api/blog/del") {
