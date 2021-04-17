@@ -43,9 +43,13 @@ const serverHandle = (req, res) => {
       return;
     }
     const blogData = handleBlogRouter(req, res);
+    
     if (blogData) {
-      res.end(JSON.stringify(blogData));
-      return;
+      blogData.then((response) => {
+        console.log(response)
+        res.end(JSON.stringify(response));
+      });
+      return ;
     }
 
     //处理未找到路由的接口
