@@ -28,25 +28,38 @@ const handleBlogRouter = (req, res) => {
   }
 
   if (method === "POST" && req.path === "/api/blog/create") {
-    const data = newBlog(req.body);
-    return new SuccessModel(data);
+    const result = newBlog(req.body);
+    return result.then(res=>{
+      return new SuccessModel(res.insertId);
+    })
   }
   if (method === "POST" && req.path === "/api/blog/update") {
     const result = updateBlog(id, req.body);
-    if (result) {
-      return new SuccessModel();
-    } else {
-      return new ErrorModel("博客更新失败");
-    }
+    return result.then( res=>{
+      if(res.affectedRows>0){
+        return new SuccessModel(true)
+      }else{
+        return new ErrorModel(false)
+      }
+    })
+    
   }
 
   if (method === "POST" && req.path === "/api/blog/del") {
-    const result = delBlog(id);
-    if (result) {
-      return new SuccessModel();
-    } else {
-      return new ErrorModel("删除博客失败");
-    }
+    const author = "张三";
+    const result = delBlog(author,id);
+    return result.then(res=>{
+      if(res.affectedRows>0){
+        return new SuccessModel(true)
+      }else{
+        return new ErrorModel(false)
+      }
+    })
+    // if (result) {
+    //   return new SuccessModel();
+    // } else {
+    //   return new ErrorModel("删除博客失败");
+    // }
   }
 };
 
