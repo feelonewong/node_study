@@ -46,7 +46,7 @@ const serverHandle = (req, res) => {
     
     if (blogData) {
       blogData.then((response) => {
-        console.log(response)
+       
         res.end(JSON.stringify(response));
       });
       return ;
