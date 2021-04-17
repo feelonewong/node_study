@@ -20,8 +20,11 @@ const handleBlogRouter = (req, res) => {
   }
 
   if (method === "GET" && req.path === "/api/blog/detail") {
-    const detailData = getDetail(id);
-    return new SuccessModel(detailData);
+    const result = getDetail(id);
+    return result.then((res) => {
+      console.log(res)
+      return new SuccessModel(res);
+    });
   }
 
   if (method === "POST" && req.path === "/api/blog/create") {
