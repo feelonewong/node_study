@@ -7,9 +7,11 @@ const handleUserRouter = (req, res) => {
     const result = loginCheck( username, password );
     return result.then( data=>{
       if(data.length === 0){
+
         return new ErrorModel("登录失败");
       }
       if(data[0].username){
+        res.setHeader("Set-Cookie",`username=${username};path=/;httpOnly`)
         return new SuccessModel(true);
       }
       

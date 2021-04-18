@@ -38,8 +38,8 @@ const serverHandle = (req, res) => {
   req.cookie = {}
   const cookieStr = req["headers"].cookie || "";
   cookieStr.split(";").forEach(element => {
-    const key = element.split("=")[0];
-    const value = element.split("=")[1];
+    const key = element.split("=")[0].trim();
+    const value = element.split("=")[1].trim();
     req.cookie[key] = value;
   });
 
